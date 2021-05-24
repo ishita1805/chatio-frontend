@@ -33,15 +33,13 @@ const Chat = () => {
                 if(room === localStorage.getItem('conversation')) {
                     setMessages([msg,...messages]);
                 }
-                else {
-                    axios.get(`${url}/contact/getConversation`, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
-                        .then((resp) => {
-                            setConvos(resp.data.resp);
-                        })
-                        .catch((e) => {
-                            console.log(e);
-                        }) 
-                }
+                axios.get(`${url}/contact/getConversation`, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
+                    .then((resp) => {
+                        setConvos(resp.data.resp);
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                    }) 
             }
         })   
     },[messages])
