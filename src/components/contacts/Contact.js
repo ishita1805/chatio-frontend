@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useContext } from 'react'
 import {MainContext} from '../../context/MainContext'
-// import {ConversationContext} from '../../context/ConversationContext'
+import {ConversationContext} from '../../context/ConversationContext'
 import {ContactsContext} from '../../context/ContactContext'
 import ModalContact from '../modalContact/ModalContact'
 import {ChatContext} from '../../context/chat'
@@ -12,7 +12,7 @@ import url from '../../url'
 
 const Contact = (props) => {
     const { ID } = useContext(MainContext);
-    // const { setMessages, setConvoData, setMedia, setConversation } = useContext(ConversationContext);
+    const { setMessages, setConvoData } = useContext(ConversationContext);
     const { received, contacts, setReceived, setSent } = useContext(ContactsContext);
     const { setConversation } = useContext(ChatContext)
     const [pop,setPop] = useState(false);
@@ -66,6 +66,25 @@ const Contact = (props) => {
                 console.log(e);
             })
         }
+        axios.post(
+            `${url}/contact/getOne`,
+            { id: convid },
+            { withCredentials: true, headers: { 'Content-Type': 'application/json' } }
+          )
+          .then((resp) => {
+              let tempObj = {
+                  id:resp.data.resp.id,
+                  User1: resp.data.resp.User1,
+                  User2: resp.data.resp.User2,
+                  User1Id: resp.data.resp.User1Id,
+                  User2Id: resp.data.resp.User2Id,
+              }
+              setConvoData(tempObj);
+              setMessages(resp.data.resp.Messages);
+          })
+          .catch((e) => {
+              console.log(e);
+          })  
     }
 
     return (

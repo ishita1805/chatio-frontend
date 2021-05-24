@@ -15,7 +15,7 @@ import { SocketContext } from '../../context/socketContext'
 const Chat = () => {
     const[emoji, setEmoji] = useState(false);
     const[active, setActive] = useState(false);
-    const { setMedia, media, convoData, setConvoData, messages, setMessages } = useContext(ConversationContext);
+    const { setConvos, setMedia, media, convoData, messages, setMessages  } = useContext(ConversationContext);
     const { ID, setId, setAuth, setID } = useContext(MainContext);
     const { conversation } = useContext(ChatContext);
     const [index,setIndex] = useState(0);
@@ -25,41 +25,27 @@ const Chat = () => {
     const chatRef = useRef();
     const socket = useContext(SocketContext)
     const [mediaPrev, setMediaPrev] = useState(false);
-   
-
-    useEffect(() => {
-            axios.post(
-                  `${url}/contact/getOne`,
-                  { id: conversation },
-                  { withCredentials: true, headers: { 'Content-Type': 'application/json' } }
-                )
-                .then((resp) => {
-                    let tempObj = {
-                        id:resp.data.resp.id,
-                        User1: resp.data.resp.User1,
-                        User2: resp.data.resp.User2,
-                        User1Id: resp.data.resp.User1Id,
-                        User2Id: resp.data.resp.User2Id,
-                    }
-                    setConvoData(tempObj);
-                    setMessages(resp.data.resp.Messages);
-                })
-                .catch((e) => {
-                    console.log(e);
-                })
-                // return() => {
-                //     console.log('unmounted');
-                //     console.log(convoData);
-                //     console.log(messages);
-                // }
-    },[conversation])
-    
+       
 
     useEffect(()=>{
         socket.on('messageTrigger',({room, msg}) => {
-            console.log(room,msg, messages, convoData);
-        })
-    },[socket, messages])
+            if(convoData.id === localStorage.getItem('conversation') && messages.length>0){
+                if(room === localStorage.getItem('conversation')) {
+                    setMessages([msg,...messages]);
+                }
+                else {
+                    axios.get(`${url}/contact/getConversation`, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
+                        .then((resp) => {
+                            setConvos(resp.data.resp);
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                        }) 
+                }
+            }
+        })   
+    },[messages])
+
     
     const activeHandler = (id) => {
         if(active===id) setActive(false);
@@ -120,8 +106,7 @@ const Chat = () => {
             .catch((e) => {
                 console.log(e);
             })
-        }
-        
+        }  
     }
 
     const emojiHandler = (_, emojiObject) => {

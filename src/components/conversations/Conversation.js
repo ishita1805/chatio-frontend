@@ -1,17 +1,26 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useContext } from 'react'
 import {MainContext} from '../../context/MainContext'
 import {ConversationContext} from '../../context/ConversationContext'
 import {ChatContext} from '../../context/chat'
-// import axios from 'axios'
-// import url from '../../url'
+import axios from 'axios'
+import url from '../../url'
 
 const Conversation = () => {
     const { ID } = useContext(MainContext);    
-    const { convos } = useContext(ConversationContext);
+    const { setConvoData, setMessages, setConvos, convos } = useContext(ConversationContext);
     const { conversation, setConversation } = useContext(ChatContext)
     const [time, setTime] = useState(new Date());
    
     useEffect(() => {
+        axios.get(`${url}/contact/getConversation`, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
+        .then((resp) => {
+            setConvos(resp.data.resp);
+        })
+        .catch((e) => {
+            console.log(e);
+        }) 
+
         setInterval(() => { 
             setTime(new Date());
          }, 300000);
@@ -21,21 +30,40 @@ const Conversation = () => {
     const addConversation = (notify,conid,message) => {
         localStorage.setItem('conversation',conid);
         setConversation(conid);
-        // if(message){
-        //     if(notify && message.UserId !== ID){
-        //         axios.post(`${url}/contact/updateNotification`, { id: conid }, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
-        //         .then(() => {
-        //             let convo_clone = convos
-        //             let index = convo_clone.findIndex((item)=>item.id === conid)
-        //             convo_clone[index].notification = false;
-        //             setConvos(convo_clone);
-                   
-        //         })
-        //         .catch((e) => {
-        //             console.log(e);
-        //         })
-        //     }
-        // }       
+        if(message){
+            if(notify && message.UserId !== ID){
+                axios.post(`${url}/contact/updateNotification`, { id: conid }, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
+                .then(() => {
+                    let convo_clone = convos
+                    let index = convo_clone.findIndex((item)=>item.id === conid)
+                    convo_clone[index].notification = false;
+                    setConvos(convo_clone);  
+                })
+                .catch((e) => {
+                    console.log(e);
+                })
+            }
+        }  
+        axios.post(
+            `${url}/contact/getOne`,
+            { id: conid },
+            { withCredentials: true, headers: { 'Content-Type': 'application/json' } }
+          )
+          .then((resp) => {
+              let tempObj = {
+                  id:resp.data.resp.id,
+                  User1: resp.data.resp.User1,
+                  User2: resp.data.resp.User2,
+                  User1Id: resp.data.resp.User1Id,
+                  User2Id: resp.data.resp.User2Id,
+              }
+              setConvoData(tempObj);
+              setMessages(resp.data.resp.Messages);
+          })
+          .catch((e) => {
+              console.log(e);
+          })  
+            //  do for media too
     }
 
     return (
@@ -53,7 +81,6 @@ const Conversation = () => {
                         d = parseInt(h/24)
                     }
 
-                    
                         if(item.User1Id !== ID) return <div className={item.id===conversation?'conversation-head-active':'conversation-head'} onClick={()=>addConversation(item.notification,item.id,item.Messages[0])}>
                                     <div className='conversation-icon'></div>
                                     {item.notification && item.id!==conversation && show?<div className='conversation-alert'></div>:null}
@@ -99,7 +126,7 @@ const Conversation = () => {
                                             :<span>{item.Messages[0].body.substring(0,12)}...</span>
                                             :<p></p>
                                         }
-                                        {/* <span>{item.Messages[0].body.substring(0,12)}...</span> */}
+                                      
                                     </div>
                                     <span className={item.id===conversation?'conversation-day-active':'conversation-day'}>
                                     { msec? <>&#8226;</>:null }

@@ -16,7 +16,7 @@ import { ChatContext } from '../../context/chat'
 
 const Screen = () => {
     const { id, ID, setAuth, setId, setID } = useContext(MainContext);
-    const { convoData, setConvos, setConvoData } = useContext(ConversationContext);
+    const { setConvoData } = useContext(ConversationContext);
     const { setContacts, setSent, setReceived } = useContext(ContactsContext);
     const { conversation } = useContext(ChatContext)
     const socket = useContext(SocketContext);
@@ -34,7 +34,7 @@ const Screen = () => {
         // joining all rooms
         axios.get(`${url}/contact/get`, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
             .then((resp) => {
-                setConvos(resp.data.resp);
+                setContacts(resp.data.resp);
                 let ar = [];
                 resp.data.resp.forEach(element => {
                     ar.push(element.id);
@@ -44,15 +44,6 @@ const Screen = () => {
             .catch((e) => {
                 console.log(e);
             })
-        
-        axios.get(`${url}/contact/getConversation`, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
-            .then((resp) => {
-                setContacts(resp.data.resp);
-            })
-            .catch((e) => {
-                console.log(e);
-            }) 
-
     },[])
 
     useEffect(() => {
@@ -143,6 +134,7 @@ const Screen = () => {
         })
 
     }, [socket])
+
 
     
 
