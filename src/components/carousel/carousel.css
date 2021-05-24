@@ -1,0 +1,78 @@
+.modal-fixed-bg-2{
+    display:flex;
+    position:fixed;
+    background:rgba(0,0,0,0.7);
+    width:100vw;
+    height:100vh;
+    z-index:99000;
+    top:0;
+    left:0;
+    align-items:center;
+    justify-content:center;
+}
+.carousel-holder{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    justify-content:center;
+    color:rgb(194, 194, 194);
+}
+.carousel-holder p{
+    font-weight:600;
+    margin:0;
+    margin-right:12vh;
+    padding:0;
+}
+.cross-img{
+    cursor:pointer;
+    margin-right:12vh;
+    font-size:20px;
+}
+.image-holder{
+    padding:2vh;
+    display:flex;
+    color:white;
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+}
+.image-holder i{
+    background: rgb(200,251,192);
+    background: linear-gradient(45deg, rgba(200,251,192,1) 27%, rgba(148,187,233,1) 100%);
+    padding:2vh 2.5vh;
+    margin:0 2vh;
+    border-radius:5vh;
+    cursor:pointer;
+}
+.image-holder i:hover{
+    background:none;
+    color: rgb(200,251,192);
+    border:solid 2px rgb(200,251,192);
+    padding:1.8vh 2.3vh;
+    border-radius:5vh;
+}
+.image-holder img{
+    width:50vw;
+    max-height:80vh;
+    height:auto;
+    border-radius:12px;
+}
+@media screen and (max-width:900px){
+    .image-holder img{
+        width:72vw;
+    }
+    .image-holder i{
+        padding:1.3vh 1.8vh;
+        margin:0 1vh;
+    }
+    .image-holder i:hover{
+        padding:1.2vh 1.7vh;
+    }
+    .carousel-holder p{
+        margin-right:8vh;
+    }
+    .cross-img{
+        margin-right:8vh;
+    }
+}
+

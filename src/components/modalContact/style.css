@@ -1,0 +1,56 @@
+.modal-fixed-bg{
+    position:fixed;
+    padding:5vh 0;
+    width:100vw;
+    top:0;
+    left:0;
+    height:90vh;
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0, 0, 0, 0.534);
+    z-index:9900 !important;
+}
+.row-end{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:1vh 0 2vh 0;
+}
+.row-end i{
+    color:rgb(173, 173, 173);
+    font-size:17px;
+}
+.row-end p{
+    margin:0;
+    color:rgb(173, 173, 173);
+    font-weight:600;
+}
+.Add-Contact-Form{
+    padding:2vh;
+    width:70vh;
+    background:rgb(51, 51, 51);
+    max-height: 80vh;
+    border-radius:8px;
+    box-shadow:0 0 5px rgba(0,0,0,0.3);
+    cursor:pointer;
+}
+
+.input-contact{
+    background:rgb(26, 26, 26);
+    width:90%;
+    padding:2vh 5%;
+    margin-bottom:2vh;
+    border-radius:5px;
+}
+@media screen and (max-width:800px){
+    .Add-Contact-Form{
+        width:60vw;
+    }
+}
+@media screen and (max-width:600px){
+    .Add-Contact-Form{
+        width:80vw;
+    }
+}
