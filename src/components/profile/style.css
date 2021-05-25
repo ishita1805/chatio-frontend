@@ -1,0 +1,7 @@
+.profile-image{
+    height:18vh !important;
+    width:18vh !important;
+    margin:1vh;
+    border-radius:8px;
+    background:rgb(49, 49, 49);
+}

@@ -8,6 +8,7 @@ import Picker from 'emoji-picker-react';
 import Carousel from '../carousel/Carousel'
 import './chat.css'
 import axios from 'axios';
+import icons from '../../images'
 import url from '../../url'
 import { ChatContext } from '../../context/chat';
 import { SocketContext } from '../../context/socketContext'
@@ -25,6 +26,7 @@ const Chat = () => {
     const chatRef = useRef();
     const socket = useContext(SocketContext)
     const [mediaPrev, setMediaPrev] = useState(false);
+    const [ind,setInd] = useState(Math.floor(Math.random() * 6) + 1);
        
 
     useEffect(()=>{
@@ -44,6 +46,10 @@ const Chat = () => {
             }
         })   
     },[messages])
+
+    useEffect(() => {
+        setInd(Math.floor(Math.random() *6))
+    },[conversation])
 
     
     const activeHandler = (id) => {
@@ -135,7 +141,10 @@ const Chat = () => {
            
             <div className='chat-header'>
                 <div className='row-chat-header'>
-                    <div className='chat-icon'></div>
+                    <div className='chat-icon'>
+                    <img alt='profile' src={icons[ind]} className='chat-icon-im'/>
+                    </div>
+                    
                     {
                         convoData.User1Id !== ID?
                         <><p>{convoData.User1.userid}&ensp;</p>{convoData.User1.online?<span className='online-icon'></span>:null}</>:

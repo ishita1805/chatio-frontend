@@ -4,6 +4,7 @@ import {MainContext} from '../../context/MainContext'
 import {ConversationContext} from '../../context/ConversationContext'
 import {ChatContext} from '../../context/chat'
 import axios from 'axios'
+import icons from '../../images'
 import url from '../../url'
 
 const Conversation = () => {
@@ -11,6 +12,7 @@ const Conversation = () => {
     const { setConvoData, setMessages, setConvos, convos, setMedia } = useContext(ConversationContext);
     const { conversation, setConversation } = useContext(ChatContext)
     const [time, setTime] = useState(new Date());
+    
    
     useEffect(() => {
         axios.get(`${url}/contact/getConversation`, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
@@ -26,6 +28,7 @@ const Conversation = () => {
          }, 300000);
     }, [])
 
+   
     
     const addConversation = (notify,conid,message) => {
         localStorage.setItem('conversation',conid);
@@ -65,7 +68,7 @@ const Conversation = () => {
           })  
         axios.post(`${url}/contact/getOneMedia`,{ id: localStorage.getItem('conversation') }, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
             .then((resp) => {
-                console.log(resp.data.resp);
+                // console.log(resp.data.resp);
                 setMedia(resp.data.resp);
             })
             .catch((e) => {
@@ -89,7 +92,9 @@ const Conversation = () => {
                     }
 
                         if(item.User1Id !== ID) return <div className={item.id===conversation?'conversation-head-active':'conversation-head'} onClick={()=>addConversation(item.notification,item.id,item.Messages[0])}>
-                                    <div className='conversation-icon'></div>
+                                    <div className='conversation-icon'>
+                                        <img alt='conversation-img' src={icons[Math.floor(Math.random() *6)]} className='chat-icon-im'/>
+                                    </div>
                                     {item.notification && item.id!==conversation && show?<div className='conversation-alert'></div>:null}
                                     <div className={item.id===conversation?'conversation-p1-active':'conversation-p1'}>
                                         <p>{item.User1.userid}</p>
@@ -120,7 +125,9 @@ const Conversation = () => {
                                     </span>
                                 </div>
                         else return <div className={item.id===conversation?'conversation-head-active':'conversation-head'} onClick={()=>addConversation(item.notification,item.id,item.Messages[0])}>
-                                    <div className='conversation-icon'></div>
+                                    <div className='conversation-icon'>
+                                        <img alt='conversation-img' src={icons[Math.floor(Math.random() *6)]} className='chat-icon-im'/>
+                                    </div>
                                     {item.notification && item.id!==conversation && show?<div className='conversation-alert'></div>:null}
                                     <div className={item.id===conversation?'conversation-p1-active':'conversation-p1'}>
                                         <p>{item.User2.userid}</p>

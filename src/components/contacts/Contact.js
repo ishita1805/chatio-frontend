@@ -9,6 +9,8 @@ import Screen1 from '../modalContact/Screen1'
 import Nav from '../../components/nav/Nav'
 import axios from 'axios'
 import url from '../../url'
+import icons from '../../images'
+
 
 const Contact = (props) => {
     const { ID } = useContext(MainContext);
@@ -105,7 +107,9 @@ const Contact = (props) => {
                   
                     if(item.User1.id !== ID) 
                     return  <div className='conversation-head' onClick={()=>startChat(item.id,item.conversation)}>
-                                <div className='conversation-icon'></div>
+                                <div className='conversation-icon'>
+                                    <img alt='conversation-img' src={icons[Math.floor(Math.random() *6)]} className='chat-icon-im'/>
+                                </div>
                                 <div className='conversation-p1'>
                                     <p>{item.User1.userid}</p>
                                     {
@@ -118,7 +122,9 @@ const Contact = (props) => {
                             </div>
                     else 
                     return  <div className='conversation-head' onClick={()=>startChat(item.id,item.conversation)}>
-                                <div className='conversation-icon'></div>
+                                <div className='conversation-icon'>
+                                    <img alt='conversation-img' src={icons[Math.floor(Math.random() *6)]} className='chat-icon-im'/>
+                                </div>
                                 <div className='conversation-p1'>
                                     <p>{item.User2.userid}</p>
                                     {

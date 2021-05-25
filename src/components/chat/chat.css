@@ -121,11 +121,19 @@
     cursor:pointer;
 }
 .chat-icon{
-    height:6vh;
-    width:6vh;
+    height:7vh;
+    width:7vh;
+    overflow:hidden;
     border-radius:5vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     background:rgb(22, 22, 22);
     cursor:pointer;
+}
+.chat-icon-im{
+    height:4vh;
+    width:4vh;
 }
 .active{
     color:rgb(129, 194, 119) !important;

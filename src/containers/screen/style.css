@@ -60,6 +60,16 @@
     padding:0 2vh;
     border-radius:5px;
 }
+.row-profile-2{
+    display:flex;
+    background:rgb(49, 49, 49);
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 2vh;
+    border-radius:5px;
+    margin-bottom:2vh;
+}
 .row-profile i{
    cursor:pointer;
    color:rgb(200,251,192);
@@ -85,10 +95,11 @@
     height:20vh;
     width:20vh;
     border-radius:8px;
+    overflow: hidden;
     background:rgb(49, 49, 49);
 }
 .profile-pic i{
-    margin-left:16vh;
+    margin-left:-3vh;
     margin-top:16vh;
     background: linear-gradient(45deg, rgba(200,251,192,1) 27%, rgba(148,187,233,1) 100%);
     cursor:pointer;
@@ -141,9 +152,18 @@
 .conversation-icon{
     height:6vh;
     width:6vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    align-items:flex-end;
     margin-right:1vh;
     border-radius:3vh;
-    background:rgb(92, 92, 92);
+    background:rgb(32, 32, 32);
+}
+.conversation-img{
+    width:6vh;
+    height:auto;
 }
 .conversation-p1{
     display:flex;
