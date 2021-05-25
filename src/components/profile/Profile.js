@@ -12,7 +12,7 @@ const Profile = () => {
     const [error,setError] = useState('')
     const imageRef = useRef();
     const [prev,setPrev] = useState(false);
-    const [index] = useState(Math.floor(Math.random() * 6));
+    const [index,setIndex] = useState();
 
     const updatePasswordHandler = () => {
         if(oldPass==='' || newPass==='') setError('password feild cannot be empty')
@@ -40,6 +40,7 @@ const Profile = () => {
         axios.get(`${url}/users/user`, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
         .then((resp) => {
             console.log(resp.data.resp);
+            setIndex(resp.data.resp.photoNum);
         })
         .catch((e) => {
             console.log(e);

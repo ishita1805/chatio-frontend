@@ -93,7 +93,7 @@ const Conversation = () => {
 
                         if(item.User1Id !== ID) return <div className={item.id===conversation?'conversation-head-active':'conversation-head'} onClick={()=>addConversation(item.notification,item.id,item.Messages[0])}>
                                     <div className='conversation-icon'>
-                                        <img alt='conversation-img' src={icons[Math.floor(Math.random() *6)]} className='chat-icon-im'/>
+                                        <img alt='conversation-img' src={icons[item.User1.photoNum]} className='chat-icon-im'/>
                                     </div>
                                     {item.notification && item.id!==conversation && show?<div className='conversation-alert'></div>:null}
                                     <div className={item.id===conversation?'conversation-p1-active':'conversation-p1'}>
@@ -126,7 +126,7 @@ const Conversation = () => {
                                 </div>
                         else return <div className={item.id===conversation?'conversation-head-active':'conversation-head'} onClick={()=>addConversation(item.notification,item.id,item.Messages[0])}>
                                     <div className='conversation-icon'>
-                                        <img alt='conversation-img' src={icons[Math.floor(Math.random() *6)]} className='chat-icon-im'/>
+                                        <img alt='conversation-img' src={icons[item.User2.photoNum]} className='chat-icon-im'/>
                                     </div>
                                     {item.notification && item.id!==conversation && show?<div className='conversation-alert'></div>:null}
                                     <div className={item.id===conversation?'conversation-p1-active':'conversation-p1'}>

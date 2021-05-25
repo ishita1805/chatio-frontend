@@ -7,8 +7,9 @@ import './nav.css'
 import { SocketContext } from '../../context/socketContext';
 
 const Nav = () => {
-    const { setSent, setReceived, updated, setUpdated, sent, received, contacts, setContacts } = useContext(ContactsContext);
+    const { setSent, setReceived, sent, received, contacts, setContacts } = useContext(ContactsContext);
     const [state, setState] = useState('Requests');
+    const [updated,setUpdated] = useState(false);
     const socket = useContext(SocketContext);
     let arr = [
         'Requests',

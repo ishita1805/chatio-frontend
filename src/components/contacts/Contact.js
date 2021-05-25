@@ -108,7 +108,7 @@ const Contact = (props) => {
                     if(item.User1.id !== ID) 
                     return  <div className='conversation-head' onClick={()=>startChat(item.id,item.conversation)}>
                                 <div className='conversation-icon'>
-                                    <img alt='conversation-img' src={icons[Math.floor(Math.random() *6)]} className='chat-icon-im'/>
+                                    <img alt='conversation-img' src={icons[item.User1.photoNum]} className='chat-icon-im'/>
                                 </div>
                                 <div className='conversation-p1'>
                                     <p>{item.User1.userid}</p>
@@ -123,7 +123,7 @@ const Contact = (props) => {
                     else 
                     return  <div className='conversation-head' onClick={()=>startChat(item.id,item.conversation)}>
                                 <div className='conversation-icon'>
-                                    <img alt='conversation-img' src={icons[Math.floor(Math.random() *6)]} className='chat-icon-im'/>
+                                    <img alt='conversation-img' src={icons[item.User2.photoNum]} className='chat-icon-im'/>
                                 </div>
                                 <div className='conversation-p1'>
                                     <p>{item.User2.userid}</p>

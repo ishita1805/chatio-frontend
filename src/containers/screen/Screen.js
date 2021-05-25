@@ -14,6 +14,7 @@ import Contact from '../../components/contacts/Contact'
 import Chat from '../../components/chat/Chat'
 import RightBar from '../../components/rightBar/RightBar'
 import { ChatContext } from '../../context/chat'
+import { EncryptContext } from '../../context/EncryptContext'
 
 const Screen = () => {
     const { id, ID, setAuth, setId, setID } = useContext(MainContext);
@@ -23,6 +24,9 @@ const Screen = () => {
     const socket = useContext(SocketContext);
     const [minimize, setMinimize] = useState(false);
     const [state, setState] = useState(1);
+    const {key} = useContext(EncryptContext);
+
+
     
 
     const toggleMin = () => {
@@ -45,6 +49,8 @@ const Screen = () => {
             .catch((e) => {
                 console.log(e);
             })
+
+        console.log(key.getPublicKey());
     },[])
 
     useEffect(() => {

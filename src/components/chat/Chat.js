@@ -26,7 +26,6 @@ const Chat = () => {
     const chatRef = useRef();
     const socket = useContext(SocketContext)
     const [mediaPrev, setMediaPrev] = useState(false);
-    const [ind,setInd] = useState(Math.floor(Math.random() * 6) + 1);
        
 
     useEffect(()=>{
@@ -46,10 +45,6 @@ const Chat = () => {
             }
         })   
     },[messages])
-
-    useEffect(() => {
-        setInd(Math.floor(Math.random() *6))
-    },[conversation])
 
     
     const activeHandler = (id) => {
@@ -142,7 +137,11 @@ const Chat = () => {
             <div className='chat-header'>
                 <div className='row-chat-header'>
                     <div className='chat-icon'>
-                    <img alt='profile' src={icons[ind]} className='chat-icon-im'/>
+                        {
+                            convoData.User1Id !== ID?
+                            <img alt='profile' src={icons[convoData.User1.photoNum]} className='chat-icon-im'/>:
+                            <img alt='profile' src={icons[convoData.User2.photoNum]} className='chat-icon-im'/>
+                        }
                     </div>
                     
                     {
