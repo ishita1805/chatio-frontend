@@ -12,6 +12,7 @@ import Conversations from '../../components/conversations/Conversation'
 import Profile from '../../components/profile/Profile'
 import Contact from '../../components/contacts/Contact'
 import Chat from '../../components/chat/Chat'
+import RightBar from '../../components/rightBar/RightBar'
 import { ChatContext } from '../../context/chat'
 
 const Screen = () => {
@@ -206,7 +207,11 @@ const Screen = () => {
                         <h3>Please select a chat to continue</h3>
                     </div>
                 </div>
-            }
+        }{
+            conversation !== ''?
+            <RightBar/>:
+            null
+        }
         </div>
     )
 }

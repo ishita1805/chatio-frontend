@@ -8,7 +8,7 @@ import url from '../../url'
 
 const Conversation = () => {
     const { ID } = useContext(MainContext);    
-    const { setConvoData, setMessages, setConvos, convos } = useContext(ConversationContext);
+    const { setConvoData, setMessages, setConvos, convos, setMedia } = useContext(ConversationContext);
     const { conversation, setConversation } = useContext(ChatContext)
     const [time, setTime] = useState(new Date());
    
@@ -63,7 +63,14 @@ const Conversation = () => {
           .catch((e) => {
               console.log(e);
           })  
-            //  do for media too
+        axios.post(`${url}/contact/getOneMedia`,{ id: localStorage.getItem('conversation') }, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
+            .then((resp) => {
+                console.log(resp.data.resp);
+                setMedia(resp.data.resp);
+            })
+            .catch((e) => {
+                console.log(e);
+            })
     }
 
     return (
