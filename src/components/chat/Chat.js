@@ -32,6 +32,7 @@ const Chat = () => {
             if(convoData.id === localStorage.getItem('conversation') && messages.length>0){
                 if(room === localStorage.getItem('conversation')) {
                     setMessages([msg,...messages]);
+                    if(msg.type === 'media') setMedia([msg,...media]);
                 }
                 axios.get(`${url}/contact/getConversation`, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
                     .then((resp) => {
@@ -77,7 +78,7 @@ const Chat = () => {
         axios.post(`${url}/message/createMedia`, data , { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
             .then((response) => {
                 let dt = response.data.resp;
-                setMedia([dt,...media]);
+                // setMedia([dt,...media]);
                 socket.emit('sendMessage', { room: conversation, msg: dt });
                 closeMedia();
             })
