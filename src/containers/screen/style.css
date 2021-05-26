@@ -16,6 +16,12 @@
     border-radius:1vh;
     background:rgb(255, 89, 89);
 }
+.conversation-read{
+    /* position:absolute; */
+    font-size:14px;
+    margin:0 1vh;
+    color:rgb(78, 78, 78);
+}
 .request-alert{
     position:absolute;
     margin-top:-1.3vh;

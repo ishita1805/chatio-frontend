@@ -29,19 +29,33 @@ const Chat = () => {
        
 
     useEffect(()=>{
-        socket.on('messageTrigger',({room, msg}) => {
+        socket.on('messageTrigger',({userID, room, msg}) => {
             if(convoData.id === localStorage.getItem('conversation') && messages.length>0){
                 if(room === localStorage.getItem('conversation')) {
-                    setMessages([msg,...messages]);
-                    if(msg.type === 'media') setMedia([msg,...media]);
+                    console.log('direct messages');
+                    
+                        if(ID !== userID) {
+                            axios.post(`${url}/contact/updateNotification`, { id: localStorage.getItem('conversation') }, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
+                            .then(() => {
+                                setMessages([msg,...messages]);
+                                if(msg.type === 'media') setMedia([msg,...media]);
+                            })
+                        }
+                        else {
+                            setMessages([msg,...messages]);
+                            if(msg.type === 'media') setMedia([msg,...media]);
+                        }
                 }
+                
                 axios.get(`${url}/contact/getConversation`, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
-                    .then((resp) => {
-                        setConvos(resp.data.resp);
-                    })
-                    .catch((e) => {
-                        console.log(e);
-                    }) 
+                .then((resp) => {
+                    setConvos(resp.data.resp);
+                })
+                .catch((e) => {
+                    console.log(e);
+                }) 
+                
+              
             }
         })   
     },[messages])
@@ -80,7 +94,7 @@ const Chat = () => {
             .then((response) => {
                 let dt = response.data.resp;
                 // setMedia([dt,...media]);
-                socket.emit('sendMessage', { room: conversation, msg: dt });
+                socket.emit('sendMessage', { userID: ID, room: conversation, msg: dt });
                 closeMedia();
             })
             .catch((e) => {
@@ -101,7 +115,7 @@ const Chat = () => {
                 setEmoji(false)
                 activeHandler(3)
                 data.createdAt = new Date();
-                socket.emit('sendMessage', { room: conversation, msg: data });
+                socket.emit('sendMessage', { userID: ID, room: conversation, msg: data });
             })
             .catch((e) => {
                 console.log(e);

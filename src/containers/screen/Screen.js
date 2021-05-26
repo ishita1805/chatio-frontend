@@ -18,7 +18,7 @@ import { EncryptContext } from '../../context/EncryptContext'
 
 const Screen = () => {
     const { id, ID, setAuth, setId, setID } = useContext(MainContext);
-    const { setConvoData } = useContext(ConversationContext);
+    const { setConvos, setConvoData } = useContext(ConversationContext);
     const { setContacts, setSent, setReceived } = useContext(ContactsContext);
     const { conversation } = useContext(ChatContext)
     const socket = useContext(SocketContext);
@@ -138,6 +138,16 @@ const Screen = () => {
                     console.log(e);
                 })
             }
+        })
+
+        socket.on('update_read',() => {
+            axios.get(`${url}/contact/getConversation`, { withCredentials: true, headers: { 'Content-Type': 'application/json' } })
+                .then((resp) => {
+                    setConvos(resp.data.resp);
+                })
+                .catch((e) => {
+                    console.log(e);
+                }) 
         })
 
     }, [socket])

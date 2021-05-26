@@ -6,12 +6,14 @@ import {ChatContext} from '../../context/chat'
 import axios from 'axios'
 import icons from '../../images'
 import url from '../../url'
+import { SocketContext } from '../../context/socketContext'
 
 const Conversation = () => {
     const { ID } = useContext(MainContext);    
     const { setConvoData, setMessages, setConvos, convos, setMedia } = useContext(ConversationContext);
     const { conversation, setConversation } = useContext(ChatContext)
     const [time, setTime] = useState(new Date());
+    const socket = useContext(SocketContext);
     
    
     useEffect(() => {
@@ -41,6 +43,7 @@ const Conversation = () => {
                     let index = convo_clone.findIndex((item)=>item.id === conid)
                     convo_clone[index].notification = false;
                     setConvos(convo_clone);  
+                    socket.emit('read_notif',{ room: conid });
                 })
                 .catch((e) => {
                     console.log(e);
@@ -96,6 +99,7 @@ const Conversation = () => {
                                         <img alt='conversation-img' src={icons[item.User1.photoNum]} className='chat-icon-im'/>
                                     </div>
                                     {item.notification && item.id!==conversation && show?<div className='conversation-alert'></div>:null}
+                                   
                                     <div className={item.id===conversation?'conversation-p1-active':'conversation-p1'}>
                                         <p>{item.User1.userid}</p>
                                         {
@@ -109,6 +113,7 @@ const Conversation = () => {
                                         }
                                         
                                     </div>
+                                    {!item.notification && !show?<i className='fa fa-eye conversation-read'></i>:null}
                                     <span className={item.id===conversation?'conversation-day-active':'conversation-day'}>
                                         { msec? <>&#8226;</>:null }
                                         {
@@ -129,6 +134,7 @@ const Conversation = () => {
                                         <img alt='conversation-img' src={icons[item.User2.photoNum]} className='chat-icon-im'/>
                                     </div>
                                     {item.notification && item.id!==conversation && show?<div className='conversation-alert'></div>:null}
+                                   
                                     <div className={item.id===conversation?'conversation-p1-active':'conversation-p1'}>
                                         <p>{item.User2.userid}</p>
                                         {
@@ -142,6 +148,7 @@ const Conversation = () => {
                                         }
                                       
                                     </div>
+                                    {!item.notification && !show?<i className='fa fa-eye conversation-read'></i>:null}
                                     <span className={item.id===conversation?'conversation-day-active':'conversation-day'}>
                                     { msec? <>&#8226;</>:null }
                                         {
